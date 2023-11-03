@@ -1,9 +1,7 @@
 package br.com.nataliadiotto.schoolManagement.classes;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
+import br.com.nataliadiotto.schoolManagement.user.UserModel;
+import jakarta.persistence.*;
 import lombok.Data;
 
 import java.util.UUID;
@@ -19,6 +17,9 @@ public class ClassesModel {
     @Column(unique = true)
     public String name;
     public String classroom;
+    @ManyToOne
+    @JoinColumn(name = "professor_id") // You should specify the actual column name that links to the professor's ID
+    private UserModel userProfessor;
     public String language;
     public double duration;
 

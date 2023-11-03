@@ -20,6 +20,8 @@ public class UserModel {
     public String username;
     public String name;
     public String password;
+   @Column(columnDefinition = "NUMERIC")
     public String hourlyRate;
+
 
 }
