@@ -1,3 +1,8 @@
+// TODO: FIX THE PROFESSOR VALIDATION
+// TODO: USE PROFESSOR USERNAME OR NAME AS A FK TOO
+
+
+
 package br.com.nataliadiotto.schoolManagement.classes;
 
 import br.com.nataliadiotto.schoolManagement.user.UserModel;

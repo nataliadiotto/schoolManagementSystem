@@ -1,3 +1,6 @@
+// TODO: DECIDE WHAT TO DO WITH THE ARRAYLIST
+
+
 package br.com.nataliadiotto.schoolManagement.user;
 
 import at.favre.lib.crypto.bcrypt.BCrypt;
