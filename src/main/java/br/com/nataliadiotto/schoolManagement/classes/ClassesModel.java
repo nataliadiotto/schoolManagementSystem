@@ -17,10 +17,12 @@ public class ClassesModel {
     @Column(unique = true)
     public String name;
     public String classroom;
-    @ManyToOne
-    @JoinColumn(name = "professor_id") // You should specify the actual column name that links to the professor's ID
+
+    @ManyToOne(fetch = FetchType.LAZY, targetEntity = UserModel.class)
+    @JoinColumn(name = "user_id", referencedColumnName = "user_id", nullable = false)
     private UserModel userProfessor;
     public String language;
     public double duration;
+
 
 }
