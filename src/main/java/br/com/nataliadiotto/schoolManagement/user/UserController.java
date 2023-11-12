@@ -57,6 +57,22 @@ public class UserController {
         }
         userRepository.delete(user.get());
     }
+
+
+    @PutMapping("/{id}")
+    public ResponseEntity update(@PathVariable UUID id, @RequestBody UserModel userModel) {
+        var user = userRepository.findById(id);
+        if (user.isEmpty()) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+        }
+
+        userModel.setId(id);
+        var userUpdated = this.userRepository.save(userModel);
+        return ResponseEntity.status(HttpStatus.OK).body(userUpdated);
+    }
+
 }
+
+
 
 
