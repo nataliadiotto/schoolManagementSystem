@@ -16,7 +16,7 @@ public class UserModel {
 
     @Id
     @GeneratedValue(generator = "UUID") //automatically generate Id
-    private UUID user_id;
+    private UUID id;
 
     @Column(unique = true) //constraint for granting unique users
     public String username;
@@ -26,7 +26,7 @@ public class UserModel {
    @Column(columnDefinition = "NUMERIC")
     public double hourlyRate;
 
-   @OneToMany(mappedBy = "userProfessor", fetch=FetchType.LAZY,cascade = CascadeType.PERSIST)
+   @OneToMany(mappedBy = "teacher", fetch=FetchType.LAZY,cascade = CascadeType.PERSIST)
    private List<ClassesModel> classes = new ArrayList<>();
 
     public UserModel() {
@@ -50,5 +50,11 @@ public class UserModel {
         }
     }
 
+    public void setId(UUID id) {
+        this.id = id;
+    }
+
+    /*
+*/
 
 }

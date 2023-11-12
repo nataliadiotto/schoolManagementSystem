@@ -19,8 +19,8 @@ public class ClassesModel {
     public String classroom;
 
     @ManyToOne(fetch = FetchType.LAZY, targetEntity = UserModel.class) //Defines a many-to-one relationship with the UserModel class.
-    @JoinColumn(name = "user_id", referencedColumnName = "user_id", nullable = false) // Specifies the foreign key column and its properties (nullable -> there must be a user_id)
-    private UserModel userProfessor;
+    @JoinColumn(name = "teacher_id", referencedColumnName = "id", nullable = false) // Specifies the foreign key column and its properties (nullable -> there must be a user_id)
+    private UserModel teacher;
     public String language;
     public double duration;
 

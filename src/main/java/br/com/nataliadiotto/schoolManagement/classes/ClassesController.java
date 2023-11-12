@@ -1,5 +1,5 @@
-// TODO: FIX THE PROFESSOR VALIDATION
-// TODO: USE PROFESSOR USERNAME OR NAME AS A FK TOO
+// TODO: FIX THE PROFESSOR VALIDATION - VALIDATE USERNAME OR ID?
+// TODO: USE PROFESSOR USERNAME OR NAME AS A FK TOO OR LEAVE THE ID?
 
 
 
@@ -29,23 +29,23 @@ public class ClassesController {
 
     @PostMapping("/")
     public ResponseEntity create(@RequestBody ClassesModel classesModel) {
-        var classVar = this.classesRepository.findByName(classesModel.getName());
 
-        //check if professor exists
-        /*UserModel professor = this.userRepository.findByUsername
-                (classesModel.getUserProfessor().getUsername());
+        //check if the professor exists by username
+        UserModel teacher = this.userRepository.findByUsername(classesModel.
+                        getTeacher().getUsername());
 
-        if (professor == null) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Professor does not exist");
-        }*/
+        //if the professor does not exist, return a bad request response
+        if (teacher == null) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Teacher does not exist.");
+        }
 
-        //set the saved professor in the ClassesModel entity
-        UserModel userProfessor = this.userRepository.
+        //the professor exists, so set it in the ClassesModel entity
+        /* UserModel userProfessor = this.userRepository.
                 getReferenceById(classesModel.getUserProfessor().getUser_id());
-        classesModel.setUserProfessor(userProfessor);
+        classesModel.setUserProfessor(userProfessor);*/
+        classesModel.setTeacher(teacher);
 
         var classCreated = this.classesRepository.save(classesModel);
-
         return ResponseEntity.status(HttpStatus.OK).body(classCreated);
     }
 
