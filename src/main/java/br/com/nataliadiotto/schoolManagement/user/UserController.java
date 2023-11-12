@@ -45,8 +45,10 @@ public class UserController {
         return ResponseEntity.status(HttpStatus.OK).body(userCreated);
     }
 
-    @OneToMany(mappedBy = "teacher") // mappedBy points to the corresponding field in the Classes entity
-    private List<ClassesModel> classes; // This represents the classes taught by the teacher
+   @GetMapping("/")
+   public List<UserModel> list() {
+        return userRepository.findAll();
+   }
 
     @GetMapping("/{id}")
     public UserModel search(@PathVariable UUID id) {
@@ -79,6 +81,9 @@ public class UserController {
         var userUpdated = this.userRepository.save(userModel);
         return ResponseEntity.status(HttpStatus.OK).body(userUpdated);
     }
+
+    @OneToMany(mappedBy = "teacher") // mappedBy points to the corresponding field in the Classes entity
+    private List<ClassesModel> classes; // This represents the classes taught by the teacher
 
 }
 
