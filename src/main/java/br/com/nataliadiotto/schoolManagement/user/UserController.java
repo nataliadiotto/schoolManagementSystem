@@ -48,6 +48,15 @@ public class UserController {
     @OneToMany(mappedBy = "teacher") // mappedBy points to the corresponding field in the Classes entity
     private List<ClassesModel> classes; // This represents the classes taught by the teacher
 
+    @GetMapping("/{id}")
+    public UserModel search(@PathVariable UUID id) {
+        var user = userRepository.findById(id);
+        if (user.isEmpty()) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+        }
+       return user.get();
+    }
+
     @DeleteMapping("/{id}")
     @ResponseStatus(code = HttpStatus.NO_CONTENT)
     public void delete(@PathVariable UUID id) {
