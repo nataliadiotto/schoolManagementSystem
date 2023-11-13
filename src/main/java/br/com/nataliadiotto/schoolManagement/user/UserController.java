@@ -1,4 +1,4 @@
-// TODO: DECIDE WHAT TO DO WITH THE ARRAYLIST
+// TODO: LIST CLASSES FROM USERS
 
 
 package br.com.nataliadiotto.schoolManagement.user;
@@ -46,7 +46,7 @@ public class UserController {
     }
 
    @GetMapping("/")
-   public List<UserModel> list() {
+   public List<UserModel> listAll() {
         return userRepository.findAll();
    }
 

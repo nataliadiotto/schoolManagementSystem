@@ -1,5 +1,5 @@
 // TODO: FIX THE PROFESSOR VALIDATION - VALIDATE USERNAME OR ID?
-// TODO: USE PROFESSOR USERNAME OR NAME AS A FK TOO OR LEAVE THE ID?
+// TODO: IMPLEMENT CRUD OPERATIONS
 
 
 
@@ -10,10 +10,11 @@ import br.com.nataliadiotto.schoolManagement.user.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
+
+import java.util.List;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/classes")
@@ -39,14 +40,47 @@ public class ClassesController {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Teacher does not exist.");
         }
 
-        //the professor exists, so set it in the ClassesModel entity
-        /* UserModel userProfessor = this.userRepository.
-                getReferenceById(classesModel.getUserProfessor().getUser_id());
-        classesModel.setUserProfessor(userProfessor);*/
+
         classesModel.setTeacher(teacher);
 
         var classCreated = this.classesRepository.save(classesModel);
         return ResponseEntity.status(HttpStatus.OK).body(classCreated);
+    }
+
+    @GetMapping("/")
+    public List<ClassesModel> listAll() {
+        return classesRepository.findAll();
+    }
+
+    @GetMapping("/{id}")
+    public ClassesModel search(@PathVariable UUID id){
+        var tempClass = classesRepository.findById(id);
+        if (tempClass.isEmpty()) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+        }
+        return tempClass.get();
+    }
+
+    @DeleteMapping("/{id}")
+    @ResponseStatus(code = HttpStatus.NO_CONTENT)
+    public void delete(@PathVariable UUID id) {
+        var tempClass = classesRepository.findById(id);
+        if (tempClass.isEmpty()) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+        }
+        classesRepository.delete(tempClass.get());
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity update(@PathVariable UUID id, @RequestBody ClassesModel classesModel) {
+        var tempClass = classesRepository.findById(id);
+        if (tempClass.isEmpty()) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+        }
+
+        classesModel.setId(id);
+        var updatedClass = this.classesRepository.save(classesModel);
+        return ResponseEntity.status(HttpStatus.OK).body(updatedClass);
     }
 
 
